@@ -42,5 +42,4 @@ http://localhost:5000
 
 ## 📦 Docker Hub Image
 
-Replace with your link:
-https://hub.docker.com/r/yourdockerhubusername/notes-app
+https://hub.docker.com/repository/docker/aarydeshpande/note-app/general
