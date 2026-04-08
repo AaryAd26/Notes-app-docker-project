@@ -1,13 +1,32 @@
-var express = require('express')
-var app = express()
+const express = require("express");
+const path = require("path");
 
-app.set('port', (process.env.PORT || 5000))
-app.use(express.static(__dirname + '/public'))
+const app = express();
+const PORT = process.env.PORT || 5000;
 
-app.get('/', function(request, response) {
-  response.send('Hello World!')
-})
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.listen(app.get('port'), function() {
-  console.log("Node app is running at localhost:" + app.get('port'))
-})
+// In-memory storage (simple for demo)
+let notes = [];
+
+// Serve static files
+app.use(express.static(path.join(__dirname, "public")));
+
+// API: Get notes
+app.get("/api/notes", (req, res) => {
+  res.json(notes);
+});
+
+// API: Add note
+app.post("/api/notes", (req, res) => {
+  const { text } = req.body;
+  if (text) {
+    notes.push({ id: Date.now(), text });
+  }
+  res.redirect("/");
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
